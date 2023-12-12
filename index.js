@@ -24,9 +24,8 @@ async function run() {
   try {
     await client.connect();
     // console.log("database connect");
-    const userCollection = client.db('toRent').collection('user');
-    const flatCollection = client.db('toRent').collection('flats');
-    const bookFlatsCollection = client.db('toRent').collection('bookFlats');
+    const userCollection = client.db('smartFarming').collection('user');
+    const userTreatment = client.db('smartFarming').collection('treatments');
 
     //   // // // // // // // // // // // //
     //create and update a user
@@ -71,23 +70,21 @@ async function run() {
       res.send(user);
     });
 
+    // //                        All Treatment
+    // All Treatment Collection
+    app.post('/treatment', async (req, res) => {
+      const newProduct = req.body;
+      const result = await userTreatment.insertOne(newProduct);
+      res.send(result);
+    });
 
-
-    // // //                        ALl services
-    // // All Services Collection
-    // app.post('/allServices', async (req, res) => {
-    //   const newProduct = req.body;
-    //   const result = await allServicesCollection.insertOne(newProduct);
-    //   res.send(result);
-    // });
-
-    // // get all services
-    // app.get('/allServices', async (req, res) => {
-    //   const query = {};
-    //   const cursor = allServicesCollection.find(query);
-    //   const mainProducts = await cursor.toArray();
-    //   res.send(mainProducts);
-    // });
+    // get all Treatment
+    app.get('/treatment', async (req, res) => {
+      const query = {};
+      const cursor = userTreatment.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
     // // all service filter by service category
     // app.get('/allServices/:service', async (req, res) => {
     //   const service = req.params.service;
