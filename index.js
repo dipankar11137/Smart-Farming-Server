@@ -93,6 +93,20 @@ async function run() {
       const user = await cursor.toArray();
       res.send(user);
     });
+    //  treatment  update Prescription
+    app.put('/treatmentPrescription/:id', async (req, res) => {
+      const id = req.params.id;
+      const updatePrescription = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          prescription: updatePrescription.prescription,
+        },
+      };
+      const result = await userTreatment.updateOne(query, updateDoc, options);
+      res.send(result);
+    });
     //  treatment  update payment
     app.put('/treatmentPayment/:id', async (req, res) => {
       const id = req.params.id;
