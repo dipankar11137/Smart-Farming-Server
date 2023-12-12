@@ -100,20 +100,6 @@ async function run() {
       const result = await userTreatment.findOne(query);
       res.send(result);
     });
-    //  treatment  update Prescription
-    app.put('/treatmentPrescription/:id', async (req, res) => {
-      const id = req.params.id;
-      const updatePrescription = req.body;
-      const query = { _id: ObjectId(id) };
-      const options = { upsert: true };
-      const updateDoc = {
-        $set: {
-          prescription: updatePrescription.prescription,
-        },
-      };
-      const result = await userTreatment.updateOne(query, updateDoc, options);
-      res.send(result);
-    });
     //  treatment  update payment
     app.put('/treatmentPayment/:id', async (req, res) => {
       const id = req.params.id;
@@ -128,6 +114,21 @@ async function run() {
       const result = await userTreatment.updateOne(query, updateDoc, options);
       res.send(result);
     });
+    //  treatment  update Prescription
+    app.put('/treatmentPrescription/:id', async (req, res) => {
+      const id = req.params.id;
+      const updatePrescription = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          prescription: updatePrescription.prescription,
+        },
+      };
+      const result = await userTreatment.updateOne(query, updateDoc, options);
+      res.send(result);
+    });
+
     // // all service filter by service category
     // app.get('/allServices/:service', async (req, res) => {
     //   const service = req.params.service;
