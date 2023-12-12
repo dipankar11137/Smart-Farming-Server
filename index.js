@@ -85,7 +85,15 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
-    // restock buy blood item and update payment
+    // get treatment by email
+    app.get('/treatment/:email', async (req, res) => {
+      const email = req.params.email;
+      const query = { email };
+      const cursor = userTreatment.find(query);
+      const user = await cursor.toArray();
+      res.send(user);
+    });
+    //  treatment  update payment
     app.put('/treatmentPayment/:id', async (req, res) => {
       const id = req.params.id;
       const updatePayment = req.body;
