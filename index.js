@@ -72,17 +72,31 @@ async function run() {
 
     // //                        All Treatment
     // All Treatment Collection
-    app.post('/treatment', async (req, res) => {
+    app.post('/treatments', async (req, res) => {
       const newProduct = req.body;
       const result = await userTreatment.insertOne(newProduct);
       res.send(result);
     });
 
     // get all Treatment
-    app.get('/treatment', async (req, res) => {
+    app.get('/treatments', async (req, res) => {
       const query = {};
       const cursor = userTreatment.find(query);
       const result = await cursor.toArray();
+      res.send(result);
+    });
+    // restock buy blood item and update payment
+    app.put('/treatmentPayment/:id', async (req, res) => {
+      const id = req.params.id;
+      const updatePayment = req.body;
+      const query = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          payment: updatePayment.payment,
+        },
+      };
+      const result = await userTreatment.updateOne(query, updateDoc, options);
       res.send(result);
     });
     // // all service filter by service category
