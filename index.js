@@ -101,14 +101,14 @@ async function run() {
       res.send(result);
     });
     //  treatment  update payment
-    app.put('/treatmentPayment/:id', async (req, res) => {
+    app.put('/treatmentPayments/:id', async (req, res) => {
       const id = req.params.id;
-      const updatePayment = req.body;
+      const updatePayments = req.body;
       const query = { _id: ObjectId(id) };
       const options = { upsert: true };
       const updateDoc = {
         $set: {
-          payment: updatePayment.payment,
+          payment: updatePayments.payment,
         },
       };
       const result = await userTreatment.updateOne(query, updateDoc, options);
